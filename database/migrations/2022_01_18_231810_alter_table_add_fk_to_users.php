@@ -15,7 +15,7 @@ class AlterTableAddFkToUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedBigInteger('perfil_id');
-            $table->unsignedBigInteger('tipo_bug_id');
+            $table->unsignedBigInteger('tipo_bug_id')->nullable();
 
             $table->foreign('perfil_id')->references('id')->on('perfis');
             $table->foreign('tipo_bug_id')->references('id')->on('tipo_bugs');
