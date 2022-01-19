@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Bug;
+use App\Http\Requests\BugRequest;
+use App\Services\BugService;
 use Illuminate\Http\Request;
 
 class BugController extends Controller
@@ -14,17 +16,7 @@ class BugController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json(BugService::list());
     }
 
     /**
@@ -33,9 +25,9 @@ class BugController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BugRequest $request)
     {
-        //
+        return response()->json(BugService::store($request->all()));
     }
 
     /**
@@ -46,20 +38,8 @@ class BugController extends Controller
      */
     public function show(Bug $bug)
     {
-        //
+        return response()->json($bug);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Bug  $bug
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Bug $bug)
-    {
-        //
-    }
-
     /**
      * Update the specified resource in storage.
      *
@@ -67,9 +47,9 @@ class BugController extends Controller
      * @param  \App\Bug  $bug
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Bug $bug)
+    public function update(BugRequest $request, Bug $bug)
     {
-        //
+        return response()->json(BugService::update($request->all(), $bug));
     }
 
     /**
@@ -80,6 +60,6 @@ class BugController extends Controller
      */
     public function destroy(Bug $bug)
     {
-        //
+        return response()->json(BugService::destroy($bug));
     }
 }

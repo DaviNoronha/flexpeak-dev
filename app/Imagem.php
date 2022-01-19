@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Imagem extends Model
 {
-    protected $table = 'perfis';
+    protected $table = 'imagens';
+
+    public function bug()
+    {
+        return $this->belongsTo(Bug::class);
+    }
 }

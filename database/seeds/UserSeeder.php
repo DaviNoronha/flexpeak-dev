@@ -23,42 +23,42 @@ class UserSeeder extends Seeder
         $bugFinanceiro = TipoBug::where('nome', 'financeiro')->first();
 
         User::create([
-            'name' => 'Admin',
+            'nome' => 'Admin',
             'email' => 'admin@email.com',
             'perfil_id' => $perfilAdmin->id,
             'password' => bcrypt('12345678')
         ]);
 
         User::create([
-            'name' => 'Mod Visual',
+            'nome' => 'Mod Visual',
             'email' => 'visual@email.com',
             'perfil_id' => $perfilMod->id,
             'tipo_bug_id' => $bugVisual->id,
             'password' => bcrypt('12345678')
         ]);
         User::create([
-            'name' => 'Mod Sonoro',
+            'nome' => 'Mod Sonoro',
             'email' => 'sonoro@email.com',
             'perfil_id' => $perfilMod->id,
             'tipo_bug_id' => $bugSonoro->id,
             'password' => bcrypt('12345678')
         ]);
         User::create([
-            'name' => 'Mod Físico',
+            'nome' => 'Mod Físico',
             'email' => 'fisico@email.com',
             'perfil_id' => $perfilMod->id,
             'tipo_bug_id' => $bugFisico->id,
             'password' => bcrypt('12345678')
         ]);
         User::create([
-            'name' => 'Mod Glitch',
+            'nome' => 'Mod Glitch',
             'email' => 'glitch@email.com',
             'perfil_id' => $perfilMod->id,
             'tipo_bug_id' => $bugGlitch->id,
             'password' => bcrypt('12345678')
         ]);
         User::create([
-            'name' => 'Mod Financeiro',
+            'nome' => 'Mod Financeiro',
             'email' => 'financeiro@email.com',
             'perfil_id' => $perfilMod->id,
             'tipo_bug_id' => $bugFinanceiro->id,

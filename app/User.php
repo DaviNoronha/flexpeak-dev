@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'nome', 'email', 'password', 'perfil_id', 'tipo_bug_id'
     ];
 
     /**
@@ -36,4 +36,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function perfis()
+    {
+        return $this->belongsTo(Perfil::class);
+    }
+
+    public function tipo_bugs()
+    {
+        return $this->belongsTo(TipoBug::class);
+    }
 }
