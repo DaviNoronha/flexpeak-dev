@@ -2,13 +2,14 @@
 
 namespace App\Services;
 
+use App\TipoBug;
 use App\User;
 
 class UserService
 {
     public static function list()
     {
-        return User::all();
+        return User::with(['tipo_bug', 'perfil'])->get();
     }
 
     public static function store($request)

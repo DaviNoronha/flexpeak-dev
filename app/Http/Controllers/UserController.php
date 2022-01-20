@@ -6,6 +6,7 @@ use App\Http\Requests\UserRequest;
 use App\Services\UserService;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
@@ -18,6 +19,7 @@ class UserController extends Controller
     public function index()
     {
         return response()->json(UserService::list());
+
     }
 
     /**
@@ -28,7 +30,6 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        Log::info($request);
         return response()->json(UserService::store($request->all()));
     }
 

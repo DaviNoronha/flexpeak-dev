@@ -6,6 +6,7 @@ use App\Bug;
 use App\Http\Requests\BugRequest;
 use App\Services\BugService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BugController extends Controller
 {

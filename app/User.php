@@ -37,12 +37,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function perfis()
+    public function perfil()
     {
         return $this->belongsTo(Perfil::class);
     }
 
-    public function tipo_bugs()
+    public function tipo_bug()
     {
         return $this->belongsTo(TipoBug::class);
     }
