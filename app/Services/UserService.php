@@ -4,29 +4,63 @@ namespace App\Services;
 
 use App\TipoBug;
 use App\User;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class UserService
 {
     public static function list()
     {
-        return User::with(['tipo_bug', 'perfil'])->get();
+        try {
+            return User::with(['tipo_bug', 'perfil'])->get();
+        } catch (Throwable $th) {
+            Log::error([
+                'mensagem' => $th->getMessage(),
+                'linha' => $th->getLine(),
+                'arquivo' => $th->getFile()
+            ]);
+        }
     }
 
     public static function store($request)
     {
-        $request['password'] = bcrypt($request['password']);
-        return User::create($request);
+        try {
+            $request['password'] = bcrypt($request['password']);
+            return User::create($request);
+        } catch (Throwable $th) {
+            Log::error([
+                'mensagem' => $th->getMessage(),
+                'linha' => $th->getLine(),
+                'arquivo' => $th->getFile()
+            ]);
+        }
     }
 
     public static function update($request, $user)
     {
-        $request['password'] = bcrypt($request['password']);
-        $user->update($request);
-        return $user;
+        try {
+            $request['password'] = bcrypt($request['password']);
+            $user->update($request);
+            return $user;
+        } catch (Throwable $th) {
+            Log::error([
+                'mensagem' => $th->getMessage(),
+                'linha' => $th->getLine(),
+                'arquivo' => $th->getFile()
+            ]);
+        }
     }
 
     public static function destroy($user)
     {
-        return $user->delete();
+        try {
+            return $user->delete();
+        } catch (Throwable $th) {
+            Log::error([
+                'mensagem' => $th->getMessage(),
+                'linha' => $th->getLine(),
+                'arquivo' => $th->getFile()
+            ]);
+        }
     }
 }

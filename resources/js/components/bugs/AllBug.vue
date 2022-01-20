@@ -2,13 +2,14 @@
     <div class="container">
         <h2 class="py-4 text-center">Lista de Bugs</h2>
         <button @click="getBugs()" class="btn btn-primary">Atualizar</button>
+        <router-link v-if="true" to="/bugs/create" class="btn btn-primary">Registrar Bug</router-link>
         <table class="table table-striped">
             <thead>
             <tr>
                 <th>Título</th>
                 <th>Descrição</th>
                 <th>Status</th>
-                <!-- <th>Actions</th> -->
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -20,8 +21,26 @@
                 <td v-if="bug.status == 3">Corrigido</td>
                 <td>
                     <div class="btn-group" role="group">
-                        <router-link :to="{name: 'show', params: { id: bug.id }}" class="btn btn-success">Edit</router-link>
-                        <button class="btn btn-danger" @click="deleteBug(bug.id)">Delete</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                            Mais Detalhes
+                        </button>
+                        <div class="modal" id="myModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Bug</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Descrição do Bug
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-success" data-dismiss="modal">Mudar Status</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </td>
             </tr>
