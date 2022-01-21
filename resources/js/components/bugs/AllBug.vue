@@ -1,8 +1,25 @@
 <template>
     <div class="container">
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">{{ bug.titulo }}</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        {{ bug.descricao }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Mudar Status</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <h2 class="py-4 text-center">Lista de Bugs</h2>
         <button @click="getBugs()" class="btn btn-primary">Atualizar</button>
-        <router-link v-if="true" to="/bugs/create" class="btn btn-primary">Registrar Bug</router-link>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -21,26 +38,9 @@
                 <td v-if="bug.status == 3">Corrigido</td>
                 <td>
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" @click="selectBug(bug)">
                             Mais Detalhes
                         </button>
-                        <div class="modal" id="myModal">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Bug</h4>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Descrição do Bug
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-success" data-dismiss="modal">Mudar Status</button>
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </td>
             </tr>
@@ -53,7 +53,8 @@
     export default {
        data() {
             return {
-                bugs: []
+                bugs: [],
+                bug: {}
             }
         },
         created() {
@@ -66,7 +67,10 @@
                     .then(response => {
                         this.bugs = response.data;
                     });
-            }
+            },
+            selectBug(bug) {
+                this.bug = bug;
+            },
         }
     }
 </script>

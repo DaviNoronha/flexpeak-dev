@@ -1,5 +1,4 @@
 import AllBug from './components/bugs/AllBug.vue';
-import CreateBug from './components/bugs/CreateBug.vue';
 //import ShowBug from './components/bugs/AllBug.vue';
 
 import AllUser from './components/users/AllUser.vue';
@@ -12,16 +11,6 @@ export const routes = [
         path: '/',
         component: AllBug
     },
-    {
-        name: 'create.bugs',
-        path: '/bugs/create',
-        component: CreateBug
-    },
-    /*{
-        name: 'show.bugs',
-        path: '/bugs/1',
-        component: ShowBug
-    },*/
     {
         name: 'users',
         path: '/users',

@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\TipoBug;
 use App\User;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -39,7 +38,6 @@ class UserService
     public static function update($request, $user)
     {
         try {
-            $request['password'] = bcrypt($request['password']);
             $user->update($request);
             return $user;
         } catch (Throwable $th) {
