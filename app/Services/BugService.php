@@ -13,7 +13,7 @@ class BugService
     public static function list()
     {
         try {
-            return Bug::all();
+            return Bug::with('tipo_bug')->get();
         } catch (Throwable $th) {
             Log::error([
                 'mensagem' => $th->getMessage(),
@@ -26,21 +26,18 @@ class BugService
 
     public static function store($request)
     {
-        //$arquivo = $request->allFiles('imagens');
-
-        //$arquivo->store('imagens');
-                /*for ($i = 0; $i < count($request->allFiles()['imagens']); $i++) {
-            $arquivo = $request->allFiles('imagens');
-
-            $bugImagem = new Imagem();
-            $bugImagem->bug_id = $bug->id;
-            $bugImagem->path =  $arquivo->store('imagens');
-            $bugImagem->save();
-
-        }*/
         try {
             $bug = Bug::create($request);
-            return $bug;
+
+            for ($i = 0; $i < count($request->allFiles()['imagens']); $i++) {
+                $arquivo = $request->allFiles()['imagens'][$i];
+
+                $imagem = new Imagem();
+                $imagem->bug_id = $bug->id;
+                $imagem->path = $arquivo->store('bugs/' . $bug->id);
+                $imagem->save();
+            }
+
         } catch (Throwable $th) {
             Log::error([
                 'mensagem' => $th->getMessage(),

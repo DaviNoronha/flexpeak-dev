@@ -1,5 +1,4 @@
 import AllBug from './components/bugs/AllBug.vue';
-//import ShowBug from './components/bugs/AllBug.vue';
 
 import AllUser from './components/users/AllUser.vue';
 import CreateUser from './components/users/CreateUser.vue';

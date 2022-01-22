@@ -19,7 +19,7 @@ class Bug extends Model
         return $this->hasMany(Imagem::class);
     }
 
-    public function tipo_bugs()
+    public function tipo_bug()
     {
         return $this->belongsTo(TipoBug::class);
     }

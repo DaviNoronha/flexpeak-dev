@@ -1987,11 +1987,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       bugs: [],
-      bug: {}
+      bug: {},
+      imagens: []
     };
   },
   created: function created() {
@@ -2007,6 +2014,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     selectBug: function selectBug(bug) {
       this.bug = bug;
+    },
+    getImagens: function getImagens() {
+      var _this2 = this;
+
+      this.axios.get('http://localhost:8000/api/bugs/').then(function (response) {
+        _this2.imagens = response.data;
+      });
     }
   }
 });
@@ -37986,11 +38000,15 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "modal-body" }, [
-            _vm._v(
-              "\n                    " +
-                _vm._s(_vm.bug.descricao) +
-                "\n                "
-            ),
+            _c("div", [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(_vm.bug.descricao) +
+                  "\n                    "
+              ),
+            ]),
+            _vm._v(" "),
+            _c("div"),
           ]),
           _vm._v(" "),
           _vm._m(0),
@@ -54582,7 +54600,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_users_AllUser_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/users/AllUser.vue */ "./resources/js/components/users/AllUser.vue");
 /* harmony import */ var _components_users_CreateUser_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/users/CreateUser.vue */ "./resources/js/components/users/CreateUser.vue");
 /* harmony import */ var _components_users_EditUser_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/users/EditUser.vue */ "./resources/js/components/users/EditUser.vue");
- //import ShowBug from './components/bugs/AllBug.vue';
 
 
 

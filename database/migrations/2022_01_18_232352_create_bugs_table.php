@@ -18,8 +18,7 @@ class CreateBugsTable extends Migration
             $table->unsignedBigInteger('tipo_bug_id');
             $table->string('titulo');
             $table->text('descricao');
-            $table->text('imagem');
-            $table->integer('status');
+            $table->integer('status')->default('1');
             $table->timestamps();
 
             $table->foreign('tipo_bug_id')->references('id')->on('tipo_bugs');

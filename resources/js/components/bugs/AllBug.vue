@@ -8,7 +8,12 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
+                        <div>
                         {{ bug.descricao }}
+                        </div>
+                        <div>
+
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-success" data-dismiss="modal">Mudar Status</button>
@@ -19,6 +24,7 @@
         </div>
 
         <h2 class="py-4 text-center">Lista de Bugs</h2>
+
         <button @click="getBugs()" class="btn btn-primary">Atualizar</button>
         <table class="table table-striped">
             <thead>
@@ -54,7 +60,8 @@
        data() {
             return {
                 bugs: [],
-                bug: {}
+                bug: {},
+                imagens: [],
             }
         },
         created() {
@@ -70,6 +77,13 @@
             },
             selectBug(bug) {
                 this.bug = bug;
+            },
+            getImagens() {
+                this.axios
+                    .get('http://localhost:8000/api/bugs/')
+                    .then(response => {
+                        this.imagens = response.data;
+                    });
             },
         }
     }

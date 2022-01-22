@@ -26,7 +26,6 @@ class BugRequest extends FormRequest
         return [
             'titulo' => 'required',
             'descricao' => 'required',
-            'status' => 'required',
             'tipo_bug_id' => 'required'
         ];
     }

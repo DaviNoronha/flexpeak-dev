@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Bug;
 use App\Http\Requests\BugRequest;
+use App\Imagem;
 use App\Services\BugService;
+use App\Services\TipoBugService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,6 +22,13 @@ class BugController extends Controller
         return response()->json(BugService::list());
     }
 
+    public function create()
+    {
+        return view('createBug', [
+            'tipo_bugs' => TipoBugService::list()
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -28,7 +37,24 @@ class BugController extends Controller
      */
     public function store(BugRequest $request)
     {
-        return response()->json(BugService::store($request->all()));
+        //BugService::store($request->all());
+
+        $bug = new Bug();
+        $bug->titulo = $request->titulo;
+        $bug->descricao = $request->descricao;
+        $bug->tipo_bug_id = $request->tipo_bug_id;
+        $bug->status = 1;
+        $bug->save();
+
+        for ($i = 0; $i < count($request->allFiles()['imagens']); $i++) {
+            $arquivo = $request->allFiles()['imagens'][$i];
+
+            $imagem = new Imagem();
+            $imagem->bug_id = $bug->id;
+            $imagem->path = $arquivo->store('bugs/' . $bug->id);
+            $imagem->save();
+        }
+        return redirect()->route('bugs.form');
     }
 
     /**

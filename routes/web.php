@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\BugController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,9 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/home', [BugController::class, 'create'])->name('bugs.form');
+Route::post('/home/create', [BugController::class, 'store'])->name('bugs.salvar');
+
 Auth::routes();
 
 Route::get('{any}', function () {
     return view('app');
 })->where('any', '.*')->middleware('auth');
+
+
 
