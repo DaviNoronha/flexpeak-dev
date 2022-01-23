@@ -41,12 +41,18 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/') }}">Fórum</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                         @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/') }}">Fórum</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->nome }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

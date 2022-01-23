@@ -7,27 +7,27 @@ import EditUser from './components/users/EditUser.vue';
 export const routes = [
     {
         name: 'home',
-        path: '/',
+        path: '/restrito/',
         component: AllBug
     },
     {
         name: 'home-bug',
-        path: '/home',
+        path: '/restrito/home',
         component: AllBug
     },
     {
         name: 'users',
-        path: '/users',
+        path: '/restrito/users',
         component: AllUser
     },
     {
         name: 'create.users',
-        path: '/users/create',
+        path: '/restrito/users/create',
         component: CreateUser
     },
     {
         name: 'edit.users',
-        path: '/users/edit/:id',
+        path: '/restrito/users/edit/:id',
         component: EditUser
     }
 ];

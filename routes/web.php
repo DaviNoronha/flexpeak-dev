@@ -13,11 +13,19 @@ use App\Http\Controllers\BugController;
 |
 */
 
-Route::get('/forum', [BugController::class, 'create'])->name('bugs.form');
+Route::get('/', [BugController::class, 'create'])->name('bugs.form');
 Route::post('/forum/create', [BugController::class, 'store'])->name('bugs.salvar');
 
 Auth::routes();
 
-Route::get('{any}', function () {
+Route::get('/home', function () {
+    return redirect('/restrito/home');
+});
+
+Route::get('/restrito/', function () {
+    return redirect('/restrito/home');
+});
+
+Route::get('restrito/{any}', function () {
     return view('app');
 })->where('any', '.*')->middleware('auth');

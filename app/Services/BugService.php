@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Bug;
 use App\Imagem;
+use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Throwable;
@@ -24,20 +25,23 @@ class BugService
 
     }
 
-    public static function store($request)
+    public static function store($dados, $request)
     {
         try {
-            $bug = Bug::create($request);
+            $bug = Bug::create($dados);
 
-            for ($i = 0; $i < count($request->allFiles()['imagens']); $i++) {
-                $arquivo = $request->allFiles()['imagens'][$i];
+            if ($request->imagens) {
+                for ($i = 0; $i < count($request->allFiles()['imagens']); $i++) {
+                    $arquivo = $request->allFiles()['imagens'][$i];
 
-                $imagem = new Imagem();
-                $imagem->bug_id = $bug->id;
-                $imagem->path = $arquivo->store('bugs/' . $bug->id);
-                $imagem->save();
+                    $imagem = new Imagem();
+                    $imagem->bug_id = $bug->id;
+                    $imagem->path = $arquivo->store('bugs/' . $bug->id);
+                    $imagem->save();
+                }
             }
 
+            return $bug;
         } catch (Throwable $th) {
             Log::error([
                 'mensagem' => $th->getMessage(),

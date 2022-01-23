@@ -11,7 +11,7 @@ class Bug extends Model
     ];
 
     protected $fillable = [
-        'titulo', 'descricao', 'imagem', 'status', 'tipo_bug_id'
+        'titulo', 'descricao', 'imagem', 'status', 'tipo_bug_id', 'user_id'
     ];
 
     public function imagens()
@@ -22,5 +22,10 @@ class Bug extends Model
     public function tipoBug()
     {
         return $this->belongsTo(TipoBug::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

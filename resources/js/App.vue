@@ -3,8 +3,8 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
                 <div class="navbar-nav">
-                    <router-link to="/" class="nav-item nav-link">Home</router-link>
-                    <router-link v-if="user.perfil.nome == 'admin'" to="/users" class="nav-item nav-link">Usuários</router-link>
+                    <router-link to="/restrito/" class="nav-item nav-link">Home</router-link>
+                    <router-link v-if="user.perfil.nome == 'admin'" to="/restrito/users" class="nav-item nav-link">Usuários</router-link>
                 </div>
             </div>
         </nav>

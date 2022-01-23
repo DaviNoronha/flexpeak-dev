@@ -25,39 +25,47 @@
                 </div>
             </div>
         </div>
-
-        <h2 class="py-4 text-center">Lista de Bugs</h2>
-        <button @click="getBugs()" class="btn btn-primary">Atualizar</button>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Título</th>
-                <th>Descrição</th>
-                <th class="text-center">Tipo</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Ações</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="bug in bugs" :key="bug.id">
-                <td>{{ bug.titulo }}</td>
-                <td>
-                    {{  bug.descricao.length < 30 ? bug.descricao : bug.descricao.substring(0,30) + "..." }}
-                </td>
-                <td class="text-center">{{ bug.tipo_bug.descricao }}</td>
-                <td v-if="bug.status == 1" class="text-center">Em Aberto</td>
-                <td v-if="bug.status == 2" class="text-center">Em Correção</td>
-                <td v-if="bug.status == 3" class="text-center">Corrigido</td>
-                <td class="text-center">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" @click="selectBug(bug)">
-                            Mais Detalhes
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="card-mt-4">
+            <div class="card-header">
+                <h2 class="py-4 text-center">Lista de Bugs</h2>
+                <button @click="getBugs()" class="btn btn-primary">Atualizar</button>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Descrição</th>
+                        <th class="text-center">Tipo</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="bug in bugs" :key="bug.id">
+                        <td>{{ bug.titulo }}</td>
+                        <td>
+                            {{  bug.descricao.length < 30 ? bug.descricao : bug.descricao.substring(0,30) + "..." }}
+                        </td>
+                        <td class="text-center">{{ bug.tipo_bug.descricao }}</td>
+                        <td class="text-center" style="font-size: 17px">
+                            <span v-if="bug.status == 1" class="badge badge-danger">Em Aberto</span>
+                            <span v-if="bug.status == 2" class="badge badge-warning">Em Correção</span>
+                            <span v-if="bug.status == 3" class="badge badge-success">Corrigido</span>
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" @click="selectBug(bug)">
+                                    Mais Detalhes
+                                </button>
+                                <button class="btn btn-danger" @click="deleteBug(bug.id)">Excluir</button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -84,6 +92,13 @@
                             this.bugs = response.data.filter((bug) => {
                                 return bug.tipo_bug.nome == this.user.tipo_bug.nome;
                             });
+                            this.bugs = this.bugs.filter((bug) => {
+                                if (bug.user_id) {
+                                    return bug.user_id == this.user.id;
+                                } else {
+                                    return true;
+                                }
+                            });
                         }
                     });
             },
@@ -98,6 +113,14 @@
                         this.getBugs();
                         document.getElementById('close-modal').click();
                     });
+            },
+            deleteBug(id) {
+                this.axios
+                    .delete(`http://localhost:8000/api/bugs/${id}`)
+                    .then(response => {
+                        let i = this.bugs.map(data => data.id).indexOf(id);
+                        this.bugs.splice(i, 1)
+                    });
             }
         }
     }
@@ -108,4 +131,9 @@
     width: 200px;
     margin: 5px;
 }
+.badge {
+    padding: 7px;
+    font-weight: 600;
+}
+
 </style>

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Bug;
 use App\Http\Requests\BugRequest;
-use App\Imagem;
 use App\Services\BugService;
 use App\Services\TipoBugService;
 use Illuminate\Http\Request;
@@ -36,22 +35,18 @@ class BugController extends Controller
      */
     public function store(BugRequest $request)
     {
-        $bug = new Bug();
-        $bug->titulo = $request->titulo;
-        $bug->descricao = $request->descricao;
-        $bug->tipo_bug_id = $request->tipo_bug_id;
-        $bug->status = 1;
-        $bug->save();
-
-        for ($i = 0; $i < count($request->allFiles()['imagens']); $i++) {
-            $arquivo = $request->allFiles()['imagens'][$i];
-
-            $imagem = new Imagem();
-            $imagem->bug_id = $bug->id;
-            $imagem->path = $arquivo->store('bugs/' . $bug->id);
-            $imagem->save();
+        $bug = BugService::store($request->all(), $request);
+        if ($bug) {
+            return view('createBug', [
+                'success' => true,
+                'tipo_bugs' => TipoBugService::list()
+            ]);
+        } else {
+            return view('createBug', [
+                'success' => false,
+                'tipo_bugs' => TipoBugService::list()
+            ]);
         }
-        return redirect()->route('bugs.form');
     }
 
     /**
