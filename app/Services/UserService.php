@@ -11,7 +11,20 @@ class UserService
     public static function list()
     {
         try {
-            return User::with(['tipo_bug', 'perfil'])->get();
+            return User::with(['tipoBug', 'perfil'])->get();
+        } catch (Throwable $th) {
+            Log::error([
+                'mensagem' => $th->getMessage(),
+                'linha' => $th->getLine(),
+                'arquivo' => $th->getFile()
+            ]);
+        }
+    }
+
+    public static function find($id)
+    {
+        try {
+            return User::where('id', $id)->with(['tipoBug', 'perfil'])->first();
         } catch (Throwable $th) {
             Log::error([
                 'mensagem' => $th->getMessage(),

@@ -8,7 +8,6 @@ use App\Imagem;
 use App\Services\BugService;
 use App\Services\TipoBugService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class BugController extends Controller
 {
@@ -37,8 +36,6 @@ class BugController extends Controller
      */
     public function store(BugRequest $request)
     {
-        //BugService::store($request->all());
-
         $bug = new Bug();
         $bug->titulo = $request->titulo;
         $bug->descricao = $request->descricao;
@@ -67,6 +64,7 @@ class BugController extends Controller
     {
         return response()->json($bug);
     }
+
     /**
      * Update the specified resource in storage.
      *
@@ -74,9 +72,9 @@ class BugController extends Controller
      * @param  \App\Bug  $bug
      * @return \Illuminate\Http\Response
      */
-    public function update(BugRequest $request, Bug $bug)
+    public function update(Request $request, Bug $bug)
     {
-        return response()->json(BugService::update($request->all(), $bug));
+        return response()->json(BugService::changeStatus($request->all(), $bug));
     }
 
     /**

@@ -35,6 +35,7 @@
 
 <script>
     export default {
+        props: ['user'],
         data() {
             return {
                 user: {
@@ -52,10 +53,13 @@
             }
         },
         created() {
+            if (this.user.perfil.nome != 'admin') {
+                this.$router.push({ name: 'home' });
+            }
             this.axios
                 .get(`http://localhost:8000/api/users/${this.$route.params.id}`)
-                .then((res) => {
-                    this.user = res.data;
+                .then((response) => {
+                    this.user = response.data;
                 });
                 this.getTipoBugs();
                 this.getPerfis();
@@ -63,8 +67,8 @@
         methods: {
             updateUser() {
                 this.axios
-                    .patch(`http://localhost:8000/api/users/${this.$route.params.id}`, this.user)
-                    .then((res) => {
+                    .put(`http://localhost:8000/api/users/${this.$route.params.id}`, this.user)
+                    .then((response) => {
                         this.$router.push({ name: 'users' });
                     });
             },

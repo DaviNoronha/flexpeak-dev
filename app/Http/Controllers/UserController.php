@@ -6,9 +6,6 @@ use App\Http\Requests\UserRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Services\UserService;
 use App\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -42,7 +39,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return response()->json($user);
+        return response()->json(UserService::find($user->id));
     }
 
     /**

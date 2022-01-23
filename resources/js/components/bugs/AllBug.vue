@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="modal" id="myModal">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">{{ bug.titulo }}</h4>
@@ -11,38 +11,44 @@
                         <div>
                         {{ bug.descricao }}
                         </div>
-                        <div>
-
+                        <div class="row justify-content-center px-3 mt-3">
+                            <img class="bug-img" v-for="imagem in bug.imagens" :key="imagem.id" :src="'http://localhost:8000/storage/'+imagem.path">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" data-dismiss="modal">Mudar Status</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                        <button v-if="bug.status != 3" type="button" class="btn btn-success" @click="changeStatus">
+                            <span v-if="bug.status == 1">Colocar em Correção</span>
+                            <span v-if="bug.status == 2">Finalizar Correção</span>
+                        </button>
+                        <button id="close-modal" type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
                     </div>
                 </div>
             </div>
         </div>
 
         <h2 class="py-4 text-center">Lista de Bugs</h2>
-
         <button @click="getBugs()" class="btn btn-primary">Atualizar</button>
         <table class="table table-striped">
             <thead>
             <tr>
                 <th>Título</th>
                 <th>Descrição</th>
-                <th>Status</th>
-                <th>Actions</th>
+                <th class="text-center">Tipo</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Ações</th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="bug in bugs" :key="bug.id">
                 <td>{{ bug.titulo }}</td>
-                <td>{{ bug.descricao }}</td>
-                <td v-if="bug.status == 1">Em Aberto</td>
-                <td v-if="bug.status == 2">Em Correção</td>
-                <td v-if="bug.status == 3">Corrigido</td>
                 <td>
+                    {{  bug.descricao.length < 30 ? bug.descricao : bug.descricao.substring(0,30) + "..." }}
+                </td>
+                <td class="text-center">{{ bug.tipo_bug.descricao }}</td>
+                <td v-if="bug.status == 1" class="text-center">Em Aberto</td>
+                <td v-if="bug.status == 2" class="text-center">Em Correção</td>
+                <td v-if="bug.status == 3" class="text-center">Corrigido</td>
+                <td class="text-center">
                     <div class="btn-group" role="group">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" @click="selectBug(bug)">
                             Mais Detalhes
@@ -57,11 +63,11 @@
 
 <script>
     export default {
-       data() {
+        props: ['user'],
+        data() {
             return {
                 bugs: [],
-                bug: {},
-                imagens: [],
+                bug: {}
             }
         },
         created() {
@@ -72,19 +78,34 @@
                 this.axios
                     .get('http://localhost:8000/api/bugs/')
                     .then(response => {
-                        this.bugs = response.data;
+                        if (this.user.perfil.nome == 'admin') {
+                            this.bugs = response.data;
+                        } else {
+                            this.bugs = response.data.filter((bug) => {
+                                return bug.tipo_bug.nome == this.user.tipo_bug.nome;
+                            });
+                        }
                     });
             },
             selectBug(bug) {
                 this.bug = bug;
             },
-            getImagens() {
+            changeStatus() {
+                this.bug.user_id = this.user.id;
                 this.axios
-                    .get('http://localhost:8000/api/bugs/')
-                    .then(response => {
-                        this.imagens = response.data;
+                    .put(`http://localhost:8000/api/bugs/${this.bug.id}`, this.bug)
+                    .then((response) => {
+                        this.getBugs();
+                        document.getElementById('close-modal').click();
                     });
-            },
+            }
         }
     }
 </script>
+
+<style>
+.bug-img {
+    width: 200px;
+    margin: 5px;
+}
+</style>

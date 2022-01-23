@@ -42,7 +42,7 @@ class User extends Authenticatable
         return $this->belongsTo(Perfil::class);
     }
 
-    public function tipo_bug()
+    public function tipoBug()
     {
         return $this->belongsTo(TipoBug::class);
     }

@@ -13,7 +13,7 @@ class BugService
     public static function list()
     {
         try {
-            return Bug::with('tipo_bug')->get();
+            return Bug::with(['imagens', 'tipoBug'])->get();
         } catch (Throwable $th) {
             Log::error([
                 'mensagem' => $th->getMessage(),
@@ -48,10 +48,13 @@ class BugService
 
     }
 
-    public static function update($request, $bug)
+    public static function destroy($bug)
     {
         try {
-            return $bug->update($request);
+            foreach ($bug->imagens as $imagem) {
+                $imagem->delete();
+            }
+            return $bug->delete();
         } catch (Throwable $th) {
             Log::error([
                 'mensagem' => $th->getMessage(),
@@ -59,13 +62,15 @@ class BugService
                 'arquivo' => $th->getFile()
             ]);
         }
-
     }
 
-    public static function destroy($bug)
+    public static function changeStatus($request, $bug)
     {
         try {
-            return $bug->delete();
+            $bug->update($request);
+            $bug->status = $bug->status + 1;
+            $bug->save();
+            return $bug;
         } catch (Throwable $th) {
             Log::error([
                 'mensagem' => $th->getMessage(),

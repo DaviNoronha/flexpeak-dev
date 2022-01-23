@@ -11,6 +11,11 @@ export const routes = [
         component: AllBug
     },
     {
+        name: 'home-bug',
+        path: '/home',
+        component: AllBug
+    },
+    {
         name: 'users',
         path: '/users',
         component: AllUser

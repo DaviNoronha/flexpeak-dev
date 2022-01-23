@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>FlexPeak Games</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -54,6 +54,7 @@
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
+                                    <a href="#" class="dropdown-item">Alterar Dados</a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
@@ -72,3 +73,9 @@
     </div>
 </body>
 </html>
+
+@auth
+    <script>
+        localStorage.setItem('userId', '{{ Auth::user()->id }}');
+    </script>
+@endauth

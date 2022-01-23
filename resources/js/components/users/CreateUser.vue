@@ -43,6 +43,7 @@
 
 <script>
     export default {
+        props: ['user'],
         data() {
             return {
                 user: {
@@ -60,6 +61,9 @@
             }
         },
         created() {
+            if (this.user.perfil.nome != 'admin') {
+                this.$router.push({ name: 'home' });
+            }
             this.getTipoBugs();
             this.getPerfis();
         },
@@ -67,9 +71,9 @@
             addUser() {
                 this.axios
                     .post('http://localhost:8000/api/users', this.user)
-                    .then(response => (
-                        this.$router.push({ name: 'users' })
-                    ))
+                    .then(response => {
+                        this.$router.push({ name: 'users' });
+                    })
                     .catch(err => console.log(err))
                     .finally(() => this.loading = false)
             },
