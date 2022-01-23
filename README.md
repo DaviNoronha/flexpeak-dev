@@ -7,8 +7,10 @@
 - composer >= 1.8
 - npm >= 6.9
 - node >= 12.5
+- mysql >= 5.7
 
 ## Build
+- Será necessário criar uma base de dados chamada "flexpeak"
 
 ```sh
 $ git clone https://github.com/DaviNoronha/flexpeak-dev.git
@@ -21,6 +23,7 @@ $ php artisan key:generate
 $ php artisan storage:link
 $ php artisan migrate
 $ php artisan db:seed
+$ php artisan serve
 ```
 
 ## Aplicação Web
