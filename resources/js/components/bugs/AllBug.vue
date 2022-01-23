@@ -100,6 +100,10 @@
                                 }
                             });
                         }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.$toast.danger('Erro ao listar bugs!', 'Erro');
                     });
             },
             selectBug(bug) {
@@ -112,6 +116,11 @@
                     .then((response) => {
                         this.getBugs();
                         document.getElementById('close-modal').click();
+                        this.$toast.success('Bug atualizado com sucesso!', 'Sucesso');
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.$toast.danger('Erro ao atualizar bug!', 'Erro');
                     });
             },
             deleteBug(id) {
@@ -120,6 +129,11 @@
                     .then(response => {
                         let i = this.bugs.map(data => data.id).indexOf(id);
                         this.bugs.splice(i, 1)
+                        this.$toast.success('Bug deletado com sucesso!', 'Sucesso');
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.$toast.danger('Erro ao deletar bug!', 'Erro');
                     });
             }
         }

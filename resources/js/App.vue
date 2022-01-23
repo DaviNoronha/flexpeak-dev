@@ -30,7 +30,10 @@
                     .get(`http://localhost:8000/api/users/${id}`)
                     .then(response => {
                         this.user = response.data;
-                        console.log(this.user);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.$toast.danger('Erro ao buscar dados do usuário logado!', 'Erro');
                     });
             },
         }

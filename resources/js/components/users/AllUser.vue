@@ -55,6 +55,10 @@
                     .get('http://localhost:8000/api/users/')
                     .then(response => {
                         this.users = response.data;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.$toast.danger('Erro ao listar usuários!', 'Erro');
                     });
             },
             deleteUser(id) {
@@ -63,6 +67,11 @@
                     .then(response => {
                         let i = this.users.map(data => data.id).indexOf(id);
                         this.users.splice(i, 1)
+                        this.$toast.success('Usuário deletado com sucesso!', 'Sucesso');
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.$toast.danger('Erro ao deletar usuário!', 'Erro');
                     });
             }
         }

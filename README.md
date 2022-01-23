@@ -29,6 +29,6 @@ $ php artisan db:seed
 - Usuários moderadores podem tratar apenas de bugs do seu tipo.
 
 ## Autor
-** Davi Noronha Gato ** 
+**Davi Noronha Gato** 
 
 * Github: [@DaviNoronha](https://github.com/DaviNoronha)

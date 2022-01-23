@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "vue-axios": "^3.4.0",
+        "vue-izitoast": "^1.2.1",
         "vue-router": "^3.5.3"
     }
 }
